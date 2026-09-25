@@ -15546,3 +15546,129 @@ If you use **Netlify Drop**, drag the **new** `dist` folder after build so `_red
 ### After it loads
 
 Netlify only hosts the **frontend**. API calls to `/api/...` will fail unless you also deploy the Spring backend somewhere and point the app at it (e.g. env + proxy config). That’s separate from the 404 routing issue.
+
+---
+
+_**User**_
+
+VITE v6.4.3  ready in 192 ms
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+11:57:04 PM [vite] http proxy error: /api/tickets
+Error: connect ECONNREFUSED 127.0.0.1:8080
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
+11:57:04 PM [vite] http proxy error: /api/tickets/f8681950-3fc5-4c0f-b330-a4c5bd7c3c52
+Error: connect ECONNREFUSED 127.0.0.1:8080
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
+11:57:04 PM [vite] http proxy error: /api/tickets
+Error: connect ECONNREFUSED 127.0.0.1:8080
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
+11:57:04 PM [vite] http proxy error: /api/tickets/f8681950-3fc5-4c0f-b330-a4c5bd7c3c52
+Error: connect ECONNREFUSED 127.0.0.1:8080
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The Vite dev server is proxying `/api` requests to `localhost:8080`, but the Spring Boot backend is not running. This causes the repeated `ECONNREFUSED` errors.
+
+I'll help start the backend and verify the setup.
+</details></think>
+
+_**Agent (default)**_
+
+Vite is proxying `/api` to port 8080, but nothing is listening there. Checking how to start the backend:
+
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **1** result in **1** directory</summary>
+
+Directory: **`/home/ayan-maity/Desktop/Ticket Management System/backend`** (1 file)
+
+| File |
+|------|
+| `README.md` |
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+Command failed to execute
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Checking the backend README for startup instructions.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/ayan-maity/Desktop/Ticket Management System/backend/README.md</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The frontend dev server is proxying API requests to localhost:8080, but the backend server is not running. Start the backend service to resolve the connection errors.
+
+Start the backend with `./gradlew bootRun` in a second terminal. The two-terminal workflow is recommended.
+</details></think>
+
+_**Agent (default)**_
+
+The frontend is fine. **Nothing is listening on port 8080**, so Vite’s proxy can’t reach the API.
+
+In dev, requests like `/api/tickets` go to **http://localhost:8080** (see `frontend/vite.config.js`). That only works when the **Spring Boot backend** is running.
+
+### Fix: run backend and frontend together
+
+**Terminal 1 — backend**
+
+```bash
+cd "/home/ayan-maity/Desktop/Ticket Management System/backend"
+./gradlew bootRun
+```
+
+Wait until you see something like `Started BackendApplication` and that the app is listening on **8080**.
+
+**Terminal 2 — frontend** (what you already have)
+
+```bash
+cd "/home/ayan-maity/Desktop/Ticket Management System/frontend"
+npm run dev
+```
+
+Then open http://localhost:5173/
+
+### If `bootRun` fails
+
+| Issue | What to do |
+|--------|------------|
+| H2 “database already in use” | `./scripts/stop-backend.sh` then `./gradlew bootRun` again |
+| Wrong Gradle (7.x) | Use **`./gradlew`**, not system `gradle` |
+| Java | Need **Java 21** |
+
+### Quick check
+
+With the backend up:
+
+```bash
+curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/api/tickets
+```
+
+You should get **200** (or another HTTP status), not a connection error.
+
+---
+
+**Netlify:** The static site has **no** backend on the same host. `/api` won’t work there until you deploy the API elsewhere and configure the frontend to use that URL. Local dev always needs `bootRun` on 8080.
