@@ -1,0 +1,11 @@
+.gradle/
+build/
+# Keep wrapper JAR in version control so ./gradlew works without system Gradle 8+
+!gradle/wrapper/gradle-wrapper.jar
+.idea/
+*.iml
+out/
+.env
+data/
+*.mv.db
+*.trace.db
