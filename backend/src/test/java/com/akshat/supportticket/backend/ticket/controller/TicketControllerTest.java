@@ -8,12 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.akshat.supportticket.backend.common.advice.GlobalExceptionHandler;
-import com.akshat.supportticket.backend.common.exception.IllegalStatusTransitionException;
-import com.akshat.supportticket.backend.ticket.dto.TicketResponse;
-import com.akshat.supportticket.backend.ticket.entity.TicketPriority;
-import com.akshat.supportticket.backend.ticket.entity.TicketStatus;
-import com.akshat.supportticket.backend.ticket.service.TicketService;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +16,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.ayan.supportticket.backend.common.advice.GlobalExceptionHandler;
+import com.ayan.supportticket.backend.common.exception.IllegalStatusTransitionException;
+import com.ayan.supportticket.backend.ticket.controller.TicketController;
+import com.ayan.supportticket.backend.ticket.dto.TicketResponse;
+import com.ayan.supportticket.backend.ticket.entity.TicketPriority;
+import com.ayan.supportticket.backend.ticket.entity.TicketStatus;
+import com.ayan.supportticket.backend.ticket.service.TicketService;
 
 @WebMvcTest(controllers = TicketController.class)
 @Import(GlobalExceptionHandler.class)

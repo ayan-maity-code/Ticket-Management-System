@@ -2,13 +2,15 @@ package com.akshat.supportticket.backend.ticket.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.akshat.supportticket.backend.ticket.entity.Ticket;
-import com.akshat.supportticket.backend.ticket.entity.TicketPriority;
-import com.akshat.supportticket.backend.ticket.entity.TicketStatus;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import com.ayan.supportticket.backend.ticket.entity.Ticket;
+import com.ayan.supportticket.backend.ticket.entity.TicketPriority;
+import com.ayan.supportticket.backend.ticket.entity.TicketStatus;
+import com.ayan.supportticket.backend.ticket.repository.TicketRepository;
 
 @DataJpaTest
 class TicketRepositoryTest {

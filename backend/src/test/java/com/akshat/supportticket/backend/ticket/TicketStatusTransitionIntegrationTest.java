@@ -6,8 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.akshat.supportticket.backend.ticket.entity.TicketStatus;
-import com.akshat.supportticket.backend.ticket.repository.TicketRepository;
+import com.ayan.supportticket.backend.ticket.entity.TicketStatus;
+import com.ayan.supportticket.backend.ticket.repository.TicketRepository;
 import com.jayway.jsonpath.JsonPath;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;

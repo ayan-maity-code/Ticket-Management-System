@@ -3,9 +3,11 @@ package com.akshat.supportticket.backend.ticket.domain;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.akshat.supportticket.backend.ticket.entity.TicketStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.ayan.supportticket.backend.ticket.domain.TicketStatusTransitionPolicy;
+import com.ayan.supportticket.backend.ticket.entity.TicketStatus;
 
 class TicketStatusTransitionPolicyTest {
 

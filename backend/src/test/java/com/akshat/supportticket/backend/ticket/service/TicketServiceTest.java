@@ -6,15 +6,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.akshat.supportticket.backend.comment.repository.CommentRepository;
-import com.akshat.supportticket.backend.common.exception.IllegalStatusTransitionException;
-import com.akshat.supportticket.backend.ticket.domain.TicketStatusTransitionPolicy;
-import com.akshat.supportticket.backend.ticket.dto.CreateTicketRequest;
-import com.akshat.supportticket.backend.ticket.dto.TicketResponse;
-import com.akshat.supportticket.backend.ticket.entity.Ticket;
-import com.akshat.supportticket.backend.ticket.entity.TicketPriority;
-import com.akshat.supportticket.backend.ticket.entity.TicketStatus;
-import com.akshat.supportticket.backend.ticket.repository.TicketRepository;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -22,6 +13,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.ayan.supportticket.backend.comment.repository.CommentRepository;
+import com.ayan.supportticket.backend.common.exception.IllegalStatusTransitionException;
+import com.ayan.supportticket.backend.ticket.domain.TicketStatusTransitionPolicy;
+import com.ayan.supportticket.backend.ticket.dto.CreateTicketRequest;
+import com.ayan.supportticket.backend.ticket.dto.TicketResponse;
+import com.ayan.supportticket.backend.ticket.entity.Ticket;
+import com.ayan.supportticket.backend.ticket.entity.TicketPriority;
+import com.ayan.supportticket.backend.ticket.entity.TicketStatus;
+import com.ayan.supportticket.backend.ticket.repository.TicketRepository;
+import com.ayan.supportticket.backend.ticket.service.TicketService;
 
 @ExtendWith(MockitoExtension.class)
 class TicketServiceTest {
